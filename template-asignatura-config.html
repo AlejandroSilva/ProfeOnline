@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Boceto del proyecto</title>
+  <!-- styles -->
+  <link rel="stylesheet" href="assets/vendor/bootstrap-3.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- scripts -->
+  <script src="assets/vendor/jquery-1.11.0.min.js"></script>
+  <script src="assets/vendor/jquery.ui.widget.js"></script>
+  <!-- <script src="assets/vendor/bootstrap-3.1.1/js/bootstrap.min.js"></script> -->
+  <script src="http://blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
+  <script src="http://blueimp.github.io/JavaScript-Load-Image/js/load-image.min.js"></script>
+
+  <script src="assets/vendor/jquery-fileupload/js/jquery.fileupload.js"></script>
+  <!-- The File Upload processing plugin -->
+  <script src="assets/vendor/jquery-fileupload/js/jquery.fileupload-process.js"></script>
+  <!-- The File Upload image preview & resize plugin -->
+  <script src="assets/vendor/jquery-fileupload/js/jquery.fileupload-image.js"></script>
+  <!-- The File Upload audio preview plugin -->
+  <script src="assets/vendor/jquery-fileupload/js/jquery.fileupload-audio.js"></script>
+  <!-- The File Upload video preview plugin -->
+  <script src="assets/vendor/jquery-fileupload/js/jquery.fileupload-video.js"></script>
+  <!-- The File Upload validation plugin -->
+  <script src="assets/vendor/jquery-fileupload/js/jquery.fileupload-validate.js"></script>
+  <!-- The File Upload user interface plugin -->
+  <script src="assets/vendor/jquery-fileupload/js/jquery.fileupload-ui.js"></script>
+
+  <!-- file upload for the template demo -->
+  <script src="assets/js/main.js"></script>
+
+</head>
+<body>
+  <!-- Header -->
+  <div class="navbar navbar-inverse " role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">ProfeOnline</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="#">Inicio</a></li>
+          <li><a href="#">Buscar</a></li>
+          <li class="active"><a href="#">Mis Asignaturas</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+    
+  <!-- Content -->
+  <div class="container bg-blanco">
+    <div class="row margin-top-2">
+      <!-- menu -->
+      <div class="col-md-3">
+        <h3>Panel lateral</h3>
+      </div>
+      <!-- columna central -->
+      <div class="col-md-9">
+        <section>
+          <div class="encabezado">
+            <h1 class="titulo">Electricidad y Magnetismo</h1>
+            <a  class="btn btn-success suscribete" href="#">Suscribete</a>
+            <div class="opciones">
+              <a class="btn">Enviar <span class="glyphicon glyphicon-cloud-upload"></span></a>
+              <a class="btn">Administrar <span class="glyphicon glyphicon-cog"></span></a>
+            </div>
+            <p>Profesor: <a href="">Victor Urra Rosel</a></p>
+          </div>
+
+
+          <!-- actualizar en mensaje del dia -->
+          <form class="form-horizontal mensaje-del-dia importante sombra" role="form">
+            <h2>Mensaje del dia <small>(visto al inicio de la pagina)</small></h2>
+            <div class="form-group">
+              <label for="mod-titulo" class="col-sm-2 control-label">Titulo</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="mod-titulo" placeholder="Titulo">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="mod-mensaje" class="col-sm-2 control-label">Mensaje</label>
+              <div class="col-sm-10">
+                <textarea id="mod-mensaje" class="form-control" placeholder="mensaje"></textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default">Guardar</button>
+              </div>
+            </div>
+          </form>
+
+          <!-- enviar una nueva entrada -->
+          <article class="panel panel-documentos sombra">
+            <div class="panel-heading">
+              <h3 class="titulo">Nueva Entrada</h2>
+            </div>
+            <div class="panel-body">
+        
+              <form id="fileupload" class="form-horizontal" method="POST" enctype="multipart/form-data" role="form">
+
+                <div class="form-group">
+                  <label for="mod-titulo" class="col-sm-2 control-label">Titulo</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="mod-titulo" placeholder="Titulo">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="mod-mensaje" class="col-sm-2 control-label">Mensaje</label>
+                  <div class="col-sm-10">
+                    <textarea id="mod-mensaje" class="form-control textarea-fixed" placeholder="mensaje"></textarea>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">Documentos</label>
+                  <div class="col-sm-10">
+                    <!-- documentos -->
+                    <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+                      <div1 class="row fileupload-buttonbar">
+                          <div class="col-md-12">
+                              <!-- The fileinput-button span is used to style the file input field as button -->
+                              <span class="btn btn-success fileinput-button">
+                                  <i class="glyphicon glyphicon-plus"></i>
+                                  <span>Agregar documentos...</span>
+                                  <input type="file" name="files[]" multiple>
+                              </span>
+                              <div class="pull-right">
+                                <button type="button" class="btn btn-danger delete">
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                    <span>Borrar todos</span>
+                                </button>
+                                <input type="checkbox" class="toggle">
+                                <!-- The global file processing state -->
+                                <span class="fileupload-process"></span>  
+                              </div>
+                          </div>
+                          <!-- The table listing the files available for upload/download -->
+                          <div class="col-md-12">
+                            <table role="presentation" class="table table-condensed"><tbody class="files"></tbody></table>
+                          </div>
+                          <div class="col-md-12" id="div-publicar">
+                            <button type="submit" class="btn btn-primary start">
+                                <i class="glyphicon glyphicon-upload"></i>
+                                <span>Publicar entrada</span>
+                            </button>
+
+                            <button type="reset" class="btn btn-warning cancel">
+                                <i class="glyphicon glyphicon-ban-circle"></i>
+                                <span>Cancelar</span>
+                            </button>
+                          </div>
+                          <!-- The global progress state -->
+                          <div class="col-md-12 fileupload-progress fade">
+                              <!-- The global progress bar -->
+                              <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                                  <div class="progress-bar progress-bar-success" style="width:0;"></div>
+                              </div>
+                              <!-- The extended global progress state -->
+                              <div class="progress-extended">&nbsp;</div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+              </form>
+
+            </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="" class="control-label col-sm-2">Tags</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control col-sm-3"placeholder="Tags separados por una coma. Ej. matematicas, angulos, seno, coseno, tangente, trigonometria."> 
+                </div>
+              </div>
+            </div>
+
+          </article>
+        </section>
+      </div>
+    </div>
+  </div>
+
+
+<!-- The template to display files available for upload -->
+<script id="template-upload" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-upload fade">
+        <td>
+            <span class="preview"></span>
+        </td>
+        <td>
+            <p class="name">{%=file.name%}</p>
+            <strong class="error text-danger"></strong>
+        </td>
+        <td>
+            <p class="size">Procesando...</p>
+            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
+        </td>
+        <td>
+            {% if (!i && !o.options.autoUpload) { %}
+                <button class="btn btn-primary start" disabled>
+                    <i class="glyphicon glyphicon-upload"></i>
+                    <span>Subir</span>
+                </button>
+            {% } %}
+            {% if (!i) { %}
+                <button class="btn btn-warning cancel">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span>Cancelar</span>
+                </button>
+            {% } %}
+        </td>
+    </tr>
+{% } %}
+</script>
+<!-- The template to display files available for download -->
+<script id="template-download" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-download fade">
+        <td>
+            <span class="preview">
+                {% if (file.thumbnailUrl) { %}
+                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}"><img src="{%=file.thumbnailUrl%}"></a>
+                {% } %}
+            </span>
+        </td>
+        <td>
+            <p class="name">
+                {% if (file.url) { %}
+                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" >{%=file.name%}</a>
+                {% } else { %}
+                    <span>{%=file.name%}</span>
+                {% } %}
+            </p>
+            {% if (file.error) { %}
+                <div><span class="label label-danger">Error</span> {%=file.error%}</div>
+            {% } %}
+        </td>
+        <td>
+            <span class="size">{%=o.formatFileSize(file.size)%}</span>
+        </td>
+        <td>
+            {% if (file.deleteUrl) { %}
+                <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+                    <i class="glyphicon glyphicon-trash"></i>
+                    <span>Borrar</span>
+                </button>
+                <input type="checkbox" name="delete" value="1" class="toggle">
+            {% } else { %}
+                <button class="btn btn-warning cancel">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span>Cancelar</span>
+                </button>
+            {% } %}
+        </td>
+    </tr>
+{% } %}
+</script>
+
+</body>
+</html>
+
+
+<!-- 
+
+ crear "tags incrementales" ->
+  - que existan tags que se definan en la creacion de la asignatura
+  - a medida que se utilizan los tags, hacer que sean inteligentes y se sugieran
+  - averiguar sobre "open course ware"
+
+
+**** busqueda de carreras, busqueda de documentos
+busqueda por tags de los documentos o de las carreras
+
+
+
+herramientas de scrum en el telefono como trello
+ver y buscar presentaciones para empesar a utilizar los metodos agiles
+
+todo:
+general una planificacion mensualm (porque no podemos hacerlo de forma diaria)
+los dias lunes o viernes -> organizarnos las tareas semanales
+"less top energy" - "stop energy"
+javier garzas tiene un video de domo definir las historias de usuariosd
+
+ -->
