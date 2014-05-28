@@ -220,3 +220,5 @@ pip-log.txt
 
 ## archivos subidos al servidor
 server/php/files/*
+## log de archivos enviados por ftp usando prepos
+prepros-ftp.json
