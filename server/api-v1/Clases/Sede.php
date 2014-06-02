@@ -3,7 +3,11 @@
     include_once "db.php";
 
     class Sede{
+        private static $LARGO_MINIMO = 2;
+
         public static function crear($nombre, $ciudad, $direccion, $telefono){
+            if( strlen($nombre)<self::$LARGO_MINIMO || strlen($ciudad)<self::$LARGO_MINIMO )
+                return -2;
             $db = DB::connect();
             $statement = $db->prepare(
                 'INSERT INTO sede(nombre, ciudad, direccion, telefono) values (:nombre, :ciudad, :direccion, :telefono)'
