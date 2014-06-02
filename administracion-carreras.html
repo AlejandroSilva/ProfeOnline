@@ -43,50 +43,54 @@
         <h3>Administración</h3>
         <ul class="nav nav-pills nav-stacked">
           <li><a href="#">Asignaturas</a></li>
-          <li><a href="#">Carreras</a></li>
-          <li class="active"><a href="#">Sedes</a></li>
+          <li class="active"><a href="#">Carreras</a></li>
+          <li><a href="#">Sedes</a></li>
         </ul>
       </div>
       <!-- columna central -->
       <div class="col-md-9">
         <section>
           <div class="encabezado">
-            <h1 class="titulo">Sedes</h1>
-            <p>Estas son las sedes existentes.... (continuar con la descripción)</p>
+            <h1 class="titulo">Carreras</h1>
+            <p>Estas son las Carreras existentes.... (continuar con la descripción)</p>
           </div>
         </section>
 
         <section>
-          <h2>Crear nueva Sede</h2>
+          <h2>Crear nueva Carrera</h2>
           <!-- TODO: modificar el formulario utilizando Bootstrap -->
-          <form action="post" id="form-sedes">
+          <form action="post" id="form-carrera">
             <label for="in-nombre">Nombre</label>
             <input type="text" id="in-nombre" min=2>
             <br>
-            <label for="in-ciudad">Ciudad</label>
-            <input type="text" id="in-ciudad">
+            <label for="in-titulo">Titulo</label>
+            <input type="text" id="in-titulo">
             <br>
-            <label for="in-direccion">Dirección</label>
-            <input type="text" id="in-direccion">
+            <label for="in-jornada">Jornada</label>
+            <input type="text" id="in-jornada">
             <br>
-            <label for="in-telefono">Telefono</lfabel>
-            <input type="text" id="in-telefono">
+            <label for="in-sede">Sede</lfabel>
+            <select name="" id="in-sede">
+              <option value="1">uno</option>
+              <option value="2">dos</option>
+              <option value="3">tress</option>
+            </select>
             <br>
             <input type="submit">
           </form>
         </section>
 
         <section>
-          <h2>Sedes existentes</h2>
+          <h2>Carreras Existentes</h2>
           <!-- TODO: modificar la tabla utilizando Bootstrap -->
-          <table id="tabla-sedes">
+          <table id="tabla-carreras">
             <thead>
               <tr>
-                <td>Codigo Sede</td>
+                <td>Codigo Carrera</td>
                 <td>Nombre</td>
-                <td>Ciudad</td>
-                <td>Dirección</td>
-                <td>Telefono</td>
+                <td>Titulo</td>
+                <td>Jornada</td>
+                <td>Sede</td>
               </tr>
             </thead>
             <tbody>
@@ -106,17 +110,13 @@
         type: "GET",
       })
       .done(function(resp){
-        var tablebody = '';
+        var cbox_body = '';
         for(i=0; i<resp.length; i++){
           var sede = resp[i];
-           tablebody += '<tr><td>'+sede.codigo_sede+"</td>"+
-                  "<td>"+sede.nombre+"</td>"+
-                  "<td>"+sede.ciudad+"</td>"+
-                   "<td>"+sede.direccion+"</td>"+
-                   "<td>"+sede.telefono+"</td></tr>";
+          cbox_body += '<option value="'+sede.codigo_sede+'">'+sede.nombre+'</option>';
         }
         // limpia y agrega el cuerpo de la tabla
-        $('#tabla-sedes tbody').empty().append( tablebody );
+        $("#in-sede").empty().append( cbox_body );
       })
       .fail(function(){
         // TODO: crear un sistema de errores
@@ -124,22 +124,47 @@
       });
     };
 
-    var nuevaSede = function(){
+
+    var cargarCarreras = function(){
       $.ajax({
-        url: "server/api-v1/sede",
+        url: "server/api-v1/carrera",
+        type: "GET",
+      })
+      .done(function(resp){
+        var tablebody = '';
+        for(i=0; i<resp.length; i++){
+          var carrera = resp[i];
+          tablebody += '<tr><td>'+carrera.codigo_carrera+"</td>"+
+                  "<td>"+carrera.nombre+"</td>"+
+                  "<td>"+carrera.titulo+"</td>"+
+                   "<td>"+carrera.jornada+"</td>"+
+                   "<td>"+carrera.nombre_sede+"</td></tr>";
+        }
+        // limpia y agrega el cuerpo de la tabla
+        $('#tabla-carreras tbody').empty().append( tablebody );
+      })
+      .fail(function(){
+        // TODO: crear un sistema de errores
+        alert("error obteniendo las sede");
+      });
+    };
+
+    var nuevaCarrera = function(){
+      $.ajax({
+        url: "server/api-v1/carrera",
         type: "POST",
         data: {
           // TODO: validaciones pendites
           nombre: $('#in-nombre').val(),
-          ciudad: $('#in-ciudad').val(),
-          direccion: $('#in-direccion').val(),
-          telefono: $('#in-telefono').val()
+          titulo: $('#in-titulo').val(),
+          jornada: $('#in-jornada').val(),
+          codigo_sede: $('#in-sede').val()
         }
       })
       .done(function(resp){
         // cargar los datos y reiniciar el formulario
-        cargarSedes();
-        $('#form-sedes')[0].reset();
+        cargarCarreras();
+        $('#form-carrera')[0].reset();
       })
       .fail(function(){
         // TODO: crear un sistema de errores
@@ -148,12 +173,15 @@
     };
 
     $(function(){
-      // on page-load se cargan las Sedes
-      cargarSedes();
-      $('#form-sedes').submit(function(evt){
+      // on page-load se cargan las Carreras
+      cargarCarreras();
+      $('#form-carrera').submit(function(evt){
         evt.preventDefault();
-        nuevaSede();
+        nuevaCarrera();
       });
+
+      // cargar combobox con los datos de las sedes
+      cargarSedes();
     });
   </script>
 </body>
