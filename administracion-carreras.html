@@ -42,9 +42,9 @@
       <div class="col-md-3">
         <h3>Administración</h3>
         <ul class="nav nav-pills nav-stacked">
-          <li><a href="#">Asignaturas</a></li>
+          <li><a href="administracion-asignaturas.html">Asignaturas</a></li>
           <li class="active"><a href="#">Carreras</a></li>
-          <li><a href="#">Sedes</a></li>
+          <li><a href="administracion-sedes.html">Sedes</a></li>
         </ul>
       </div>
       <!-- columna central -->
@@ -70,11 +70,7 @@
             <input type="text" id="in-jornada">
             <br>
             <label for="in-sede">Sede</lfabel>
-            <select name="" id="in-sede">
-              <option value="1">uno</option>
-              <option value="2">dos</option>
-              <option value="3">tress</option>
-            </select>
+            <select name="" id="in-sede"></select>
             <br>
             <input type="submit">
           </form>
@@ -117,6 +113,7 @@
         }
         // limpia y agrega el cuerpo de la tabla
         $("#in-sede").empty().append( cbox_body );
+        $("#in-sede")[0].selectedIndex = -1;
       })
       .fail(function(){
         // TODO: crear un sistema de errores
@@ -165,6 +162,7 @@
         // cargar los datos y reiniciar el formulario
         cargarCarreras();
         $('#form-carrera')[0].reset();
+        $("#in-sede")[0].selectedIndex = -1;
       })
       .fail(function(){
         // TODO: crear un sistema de errores

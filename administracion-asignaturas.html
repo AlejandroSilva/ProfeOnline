@@ -42,51 +42,47 @@
       <div class="col-md-3">
         <h3>Administración</h3>
         <ul class="nav nav-pills nav-stacked">
-          <li><a href="administracion-asignaturas.html">Asignaturas</a></li>
+          <li class="active"><a href="#">Asignaturas</a></li>
           <li><a href="administracion-carreras.html">Carreras</a></li>
-          <li class="active"><a href="#">Sedes</a></li>
+          <li><a href="administracion-sedes.html">Sedes</a></li>
         </ul>
       </div>
       <!-- columna central -->
       <div class="col-md-9">
         <section>
           <div class="encabezado">
-            <h1 class="titulo">Sedes</h1>
-            <p>Estas son las sedes existentes.... (continuar con la descripción)</p>
+            <h1 class="titulo">Asignaturas</h1>
+            <p>Estas son las Carreras existentes.... (continuar con la descripción)</p>
           </div>
         </section>
 
         <section>
-          <h2>Crear nueva Sede</h2>
+          <h2>Crear nueva Asignatura</h2>
           <!-- TODO: modificar el formulario utilizando Bootstrap -->
-          <form action="post" id="form-sedes">
+          <form action="post" id="form-asignatura">
             <label for="in-nombre">Nombre</label>
             <input type="text" id="in-nombre" min=2>
             <br>
-            <label for="in-ciudad">Ciudad</label>
-            <input type="text" id="in-ciudad">
+            <label for="in-carrera">Carrera</label>
+            <select name="" id="in-carrera"></select>
             <br>
-            <label for="in-direccion">Dirección</label>
-            <input type="text" id="in-direccion">
-            <br>
-            <label for="in-telefono">Telefono</lfabel>
-            <input type="text" id="in-telefono">
+            <label for="in-anno">Año</label>
+            <input type="text" id="in-anno" value="2014" disabled>
             <br>
             <input type="submit">
           </form>
         </section>
 
         <section>
-          <h2>Sedes existentes</h2>
+          <h2>Asignaturas Existentes</h2>
           <!-- TODO: modificar la tabla utilizando Bootstrap -->
-          <table id="tabla-sedes">
+          <table id="tabla-asignaturas">
             <thead>
               <tr>
-                <td>Codigo Sede</td>
+                <td>Codigo Asignatura</td>
                 <td>Nombre</td>
-                <td>Ciudad</td>
-                <td>Dirección</td>
-                <td>Telefono</td>
+                <td>Año</td>
+                <td>Carrera</td>
               </tr>
             </thead>
             <tbody>
@@ -100,59 +96,83 @@
   <script>
     // TODO: crear jquery plugins con las funciones utilizar un sistema de templates
     // declarando las funciones
-    var cargarSedes = function(){
+    var cargarCarreras = function(){
       $.ajax({
-        url: "server/api-v1/sede",
+        url: "server/api-v1/carrera",
+        type: "GET",
+      })
+      .done(function(resp){
+        var cbox_body = '';
+        for(i=0; i<resp.length; i++){
+          var carrera = resp[i];
+          cbox_body += '<option value="'+carrera.codigo_carrera+'">'+carrera.nombre+'</option>';
+        }
+        // limpia y agrega el cuerpo de la tabla
+        $("#in-carrera").empty().append( cbox_body );
+        $("#in-carrera")[0].selectedIndex = -1;
+      })
+      .fail(function(){
+        // TODO: crear un sistema de errores
+        alert("error obteniendo las carreras");
+      });
+    };
+
+
+    var cargarAsignaturas = function(){
+      $.ajax({
+        url: "server/api-v1/asignatura",
         type: "GET",
       })
       .done(function(resp){
         var tablebody = '';
         for(i=0; i<resp.length; i++){
-          var sede = resp[i];
-           tablebody += '<tr><td>'+sede.codigo_sede+"</td>"+
-                  "<td>"+sede.nombre+"</td>"+
-                  "<td>"+sede.ciudad+"</td>"+
-                   "<td>"+sede.direccion+"</td>"+
-                   "<td>"+sede.telefono+"</td></tr>";
+          var carrera = resp[i];
+          tablebody += '<tr><td>'+carrera.codigo_carrera+"</td>"+
+                  "<td>"+carrera.nombre+"</td>"+
+                  "<td>"+carrera.anno+"</td>"+
+                   "<td>"+carrera.nombre_carrera+"</td></tr>";
         }
         // limpia y agrega el cuerpo de la tabla
-        $('#tabla-sedes tbody').empty().append( tablebody );
+        $('#tabla-asignaturas tbody').empty().append( tablebody );
       })
       .fail(function(){
         // TODO: crear un sistema de errores
-        alert("error obteniendo las sede");
+        alert("error obteniendo las asignaturas");
       });
     };
 
-    var nuevaSede = function(){
+    var nuevaAsignatura = function(){
       $.ajax({
-        url: "server/api-v1/sede",
+        url: "server/api-v1/asignatura",
         type: "POST",
         data: {
           // TODO: validaciones pendites
           nombre: $('#in-nombre').val(),
-          ciudad: $('#in-ciudad').val(),
-          direccion: $('#in-direccion').val(),
-          telefono: $('#in-telefono').val()
+          anno: $('#in-anno').val(),
+          codigo_carrera: $('#in-carrera').val()
         }
       })
       .done(function(resp){
         // cargar los datos y reiniciar el formulario
-        cargarSedes();
-        $('#form-sedes')[0].reset();
+        cargarAsignaturas();
+        $('#form-asignatura')[0].reset();
+        $("#in-carrera")[0].selectedIndex = -1;
       })
       .fail(function(){
         // TODO: crear un sistema de errores
-        alert("error creando la sede");
+        alert("error creando la asignatura");
       });
     };
 
     $(function(){
-      // on page-load se cargan las Sedes
-      cargarSedes();
-      $('#form-sedes').submit(function(evt){
+      // on page-load se cargan las Carreras
+      cargarAsignaturas();
+      // cargar combobox con los datos de las Carreras
+      cargarCarreras();
+
+      $('#form-asignatura').submit(function(evt){
         evt.preventDefault();
-        nuevaSede();
+        nuevaAsignatura();
       });
     });
   </script>
