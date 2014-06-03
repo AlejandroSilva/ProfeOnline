@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Boceto del proyecto</title>
+  <!-- styles -->
+  <link rel="stylesheet" href="assets/vendor/bootstrap-3.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- scripts -->
+  <script src="assets/vendor/jquery-1.11.0.min.js"></script>
+  <script src="assets/vendor/bootstrap-3.1.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+  <!-- Header -->
+  <div class="navbar navbar-inverse " role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">ProfeOnline</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="#">Inicio</a></li>
+          <li><a href="#">Buscar</a></li>
+          <li class="active"><a href="#">Mis Asignaturas</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+    
+  <!-- Content -->
+  <div class="container bg-blanco">
+    <div class="row margin-top-2">
+      <!-- menu -->
+      <div class="col-md-3">
+        <h3>Administración</h3>
+        <ul class="nav nav-pills nav-stacked">
+          <li class="active"><a href="#">Asignaturas</a></li>
+          <li><a href="administracion-carreras.html">Carreras</a></li>
+          <li><a href="administracion-sedes.html">Sedes</a></li>
+        </ul>
+      </div>
+      <!-- columna central -->
+      <div class="col-md-9">
+        <section>
+          <div class="encabezado">
+            <h1 class="titulo">Asignaturas</h1>
+            <p>Estas son las Carreras existentes.... (continuar con la descripción)</p>
+          </div>
+        </section>
+
+        <section>
+          <h2>Crear nueva Asignatura</h2>
+          <!-- TODO: modificar el formulario utilizando Bootstrap -->
+          <form action="post" id="form-asignatura">
+            <label for="in-nombre">Nombre</label>
+            <input type="text" id="in-nombre" min=2>
+            <br>
+            <label for="in-carrera">Carrera</label>
+            <select name="" id="in-carrera"></select>
+            <br>
+            <label for="in-anno">Año</label>
+            <input type="text" id="in-anno" value="2014" disabled>
+            <br>
+            <input type="submit">
+          </form>
+        </section>
+
+        <section>
+          <h2>Asignaturas Existentes</h2>
+          <!-- TODO: modificar la tabla utilizando Bootstrap -->
+          <table id="tabla-asignaturas">
+            <thead>
+              <tr>
+                <td>Codigo Asignatura</td>
+                <td>Nombre</td>
+                <td>Año</td>
+                <td>Carrera</td>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // TODO: crear jquery plugins con las funciones utilizar un sistema de templates
+    // declarando las funciones
+    var cargarCarreras = function(){
+      $.ajax({
+        url: "server/api-v1/carrera",
+        type: "GET",
+      })
+      .done(function(resp){
+        var cbox_body = '';
+        for(i=0; i<resp.length; i++){
+          var carrera = resp[i];
+          cbox_body += '<option value="'+carrera.codigo_carrera+'">'+carrera.nombre+'</option>';
+        }
+        // limpia y agrega el cuerpo de la tabla
+        $("#in-carrera").empty().append( cbox_body );
+        $("#in-carrera")[0].selectedIndex = -1;
+      })
+      .fail(function(){
+        // TODO: crear un sistema de errores
+        alert("error obteniendo las carreras");
+      });
+    };
+
+
+    var cargarAsignaturas = function(){
+      $.ajax({
+        url: "server/api-v1/asignatura",
+        type: "GET",
+      })
+      .done(function(resp){
+        var tablebody = '';
+        for(i=0; i<resp.length; i++){
+          var carrera = resp[i];
+          tablebody += '<tr><td>'+carrera.codigo_carrera+"</td>"+
+                  "<td>"+carrera.nombre+"</td>"+
+                  "<td>"+carrera.anno+"</td>"+
+                   "<td>"+carrera.nombre_carrera+"</td></tr>";
+        }
+        // limpia y agrega el cuerpo de la tabla
+        $('#tabla-asignaturas tbody').empty().append( tablebody );
+      })
+      .fail(function(){
+        // TODO: crear un sistema de errores
+        alert("error obteniendo las asignaturas");
+      });
+    };
+
+    var nuevaAsignatura = function(){
+      $.ajax({
+        url: "server/api-v1/asignatura",
+        type: "POST",
+        data: {
+          // TODO: validaciones pendites
+          nombre: $('#in-nombre').val(),
+          anno: $('#in-anno').val(),
+          codigo_carrera: $('#in-carrera').val()
+        }
+      })
+      .done(function(resp){
+        // cargar los datos y reiniciar el formulario
+        cargarAsignaturas();
+        $('#form-asignatura')[0].reset();
+        $("#in-carrera")[0].selectedIndex = -1;
+      })
+      .fail(function(){
+        // TODO: crear un sistema de errores
+        alert("error creando la asignatura");
+      });
+    };
+
+    $(function(){
+      // on page-load se cargan las Carreras
+      cargarAsignaturas();
+      // cargar combobox con los datos de las Carreras
+      cargarCarreras();
+
+      $('#form-asignatura').submit(function(evt){
+        evt.preventDefault();
+        nuevaAsignatura();
+      });
+    });
+  </script>
+</body>
+</html>

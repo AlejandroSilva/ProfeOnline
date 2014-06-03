@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Boceto del proyecto</title>
+  <!-- styles -->
+  <link rel="stylesheet" href="assets/vendor/bootstrap-3.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- scripts -->
+  <script src="assets/vendor/jquery-1.11.0.min.js"></script>
+  <script src="assets/vendor/bootstrap-3.1.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+  <!-- Header -->
+  <div class="navbar navbar-inverse " role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">ProfeOnline</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="#">Inicio</a></li>
+          <li><a href="#">Buscar</a></li>
+          <li class="active"><a href="#">Mis Asignaturas</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+    
+  <!-- Content -->
+  <div class="container bg-blanco">
+    <div class="row margin-top-2">
+      <!-- menu -->
+      <div class="col-md-3">
+        <h3>Administración</h3>
+        <ul class="nav nav-pills nav-stacked">
+          <li><a href="administracion-asignaturas.html">Asignaturas</a></li>
+          <li><a href="administracion-carreras.html">Carreras</a></li>
+          <li class="active"><a href="#">Sedes</a></li>
+        </ul>
+      </div>
+      <!-- columna central -->
+      <div class="col-md-9">
+        <section>
+          <div class="encabezado">
+            <h1 class="titulo">Sedes</h1>
+            <p>Estas son las sedes existentes.... (continuar con la descripción)</p>
+          </div>
+        </section>
+
+        <section>
+          <h2>Crear nueva Sede</h2>
+          <!-- TODO: modificar el formulario utilizando Bootstrap -->
+          <form action="post" id="form-sedes">
+            <label for="in-nombre">Nombre</label>
+            <input type="text" id="in-nombre" min=2>
+            <br>
+            <label for="in-ciudad">Ciudad</label>
+            <input type="text" id="in-ciudad">
+            <br>
+            <label for="in-direccion">Dirección</label>
+            <input type="text" id="in-direccion">
+            <br>
+            <label for="in-telefono">Telefono</lfabel>
+            <input type="text" id="in-telefono">
+            <br>
+            <input type="submit">
+          </form>
+        </section>
+
+        <section>
+          <h2>Sedes existentes</h2>
+          <!-- TODO: modificar la tabla utilizando Bootstrap -->
+          <table id="tabla-sedes">
+            <thead>
+              <tr>
+                <td>Codigo Sede</td>
+                <td>Nombre</td>
+                <td>Ciudad</td>
+                <td>Dirección</td>
+                <td>Telefono</td>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // TODO: crear jquery plugins con las funciones utilizar un sistema de templates
+    // declarando las funciones
+    var cargarSedes = function(){
+      $.ajax({
+        url: "server/api-v1/sede",
+        type: "GET",
+      })
+      .done(function(resp){
+        var tablebody = '';
+        for(i=0; i<resp.length; i++){
+          var sede = resp[i];
+           tablebody += '<tr><td>'+sede.codigo_sede+"</td>"+
+                  "<td>"+sede.nombre+"</td>"+
+                  "<td>"+sede.ciudad+"</td>"+
+                   "<td>"+sede.direccion+"</td>"+
+                   "<td>"+sede.telefono+"</td></tr>";
+        }
+        // limpia y agrega el cuerpo de la tabla
+        $('#tabla-sedes tbody').empty().append( tablebody );
+      })
+      .fail(function(){
+        // TODO: crear un sistema de errores
+        alert("error obteniendo las sede");
+      });
+    };
+
+    var nuevaSede = function(){
+      $.ajax({
+        url: "server/api-v1/sede",
+        type: "POST",
+        data: {
+          // TODO: validaciones pendites
+          nombre: $('#in-nombre').val(),
+          ciudad: $('#in-ciudad').val(),
+          direccion: $('#in-direccion').val(),
+          telefono: $('#in-telefono').val()
+        }
+      })
+      .done(function(resp){
+        // cargar los datos y reiniciar el formulario
+        cargarSedes();
+        $('#form-sedes')[0].reset();
+      })
+      .fail(function(){
+        // TODO: crear un sistema de errores
+        alert("error creando la sede");
+      });
+    };
+
+    $(function(){
+      // on page-load se cargan las Sedes
+      cargarSedes();
+      $('#form-sedes').submit(function(evt){
+        evt.preventDefault();
+        nuevaSede();
+      });
+    });
+  </script>
+</body>
+</html>
