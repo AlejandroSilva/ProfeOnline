@@ -21,6 +21,7 @@ Profeonline.module('Entidades', function(Entidades, Profeonline, Backbone, Mario
             $.ajax({
                 url: "server/api-v1/carrera",
                 type: "GET",
+                dataType: "json",
             }).done(function(datos){
                 
                 // actualizamos la coleccion con los nuevos datos
@@ -44,8 +45,9 @@ Profeonline.module('Entidades', function(Entidades, Profeonline, Backbone, Mario
             $.ajax({
                 url: "server/api-v1/carrera",
                 type: "POST",
+                dataType: "json",
                 // validaciones de los datos con html5 en cliente
-                data: datos
+                data: datos,
               })
               .done(function(nuevoElemento){
                     // si el servidor acepto la solicitud, retorna el elemento creado
