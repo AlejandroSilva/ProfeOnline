@@ -18,10 +18,12 @@ Profeonline.module('Modulos.Admin', function(Admin, Profeonline, Backbone, Mario
             cargarLayout();
             mostrarMenu();
 
-            // iniciar la vista con una coleccion vacia, al iniciar cargara los datos
+            // iniciar la vista con una coleccion global ya existente en la aplicacion
             var vistaSedes = new Profeonline.Modulos.Admin.Vistas.Sedes({
-                collection: new Profeonline.Entidades.SedesColleccion()
+                collection: Profeonline.Entidades.Sedes
             });
+            // actualizar la coleccion desde el servidor
+            Profeonline.request("sedes:actualizar");
 
             // si el formulario fue enviado correctamente, volver a cargar los datos de las sedes
             vistaSedes.on("form:submit", function(datos){
@@ -29,9 +31,7 @@ Profeonline.module('Modulos.Admin', function(Admin, Profeonline, Backbone, Mario
                 var requestNueva = Profeonline.request("entidades:sede:nueva", datos);
                 $.when(requestNueva).done(function(){
                     // limpiar el formulario
-                    vistaSedes.render();
-                    // obtener el nuevo listado de sedes
-                    vistaSedes.cargarDatos();
+                    vistaSedes.limpiarCampos();
                 }).fail(function(){
                     // no deberia llegar aca por la validacion en html5
                     alert("problemas creando la sede");
@@ -46,9 +46,16 @@ Profeonline.module('Modulos.Admin', function(Admin, Profeonline, Backbone, Mario
             cargarLayout();
             mostrarMenu();
 
-            // iniciar la vista con una coleccion vacia, al iniciar cargara los datos
+            // iniciar la vista con una coleccion global ya existente en la aplicacion
             var vistaCarreras = new Profeonline.Modulos.Admin.Vistas.Carreras({
-                collection: new Profeonline.Entidades.CarreraColleccion()
+                collection: Profeonline.Entidades.Carreras
+            });
+            // actualizar la coleccion desde el servidor
+            Profeonline.request("carreras:actualizar");
+            // obtener las sedes para ser mostradas en el formulario
+            var sedesRequest = Profeonline.request("sedes:actualizar");
+            $.when(sedesRequest).done(function(){
+                vistaCarreras.mostrarSedesEnFormulario();
             });
 
             // si el formulario fue enviado correctamente, volver a cargar los datos de las sedes
@@ -57,9 +64,7 @@ Profeonline.module('Modulos.Admin', function(Admin, Profeonline, Backbone, Mario
                 var requestNueva = Profeonline.request("entidades:carrera:nueva", datos);
                 $.when(requestNueva).done(function(){
                     // limpiar el formulario
-                    vistaCarreras.render();
-                    // obtener el nuevo listado de sedes
-                    vistaCarreras.cargarDatos();
+                    vistaCarreras.limpiarCampos();
                 }).fail(function(){
                     // no deberia llegar aca por la validacion en html5
                     alert("problemas creando la sede");

@@ -88,7 +88,7 @@ Profeonline.module('Modulos.Admin.Templates', function(Templates, Profeonline, B
                 <input type="text" id="in-jornada" required maxlength="12" pattern=".{5,12}" title="Entre 5 y 12 letras"> \
                 <br> \
                 <label for="in-sede">Sede</lfabel> \
-                <select name="" id="in-sede"></select> \
+                <select name="" id="in-sede" required></select> \
                 <br> \
                 <button type="submit" class="btn btn-primary">Crear</button> \
             </form> \

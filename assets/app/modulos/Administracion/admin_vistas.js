@@ -3,14 +3,6 @@ Profeonline.module('Modulos.Admin.Vistas', function(Vistas, Profeonline, Backbon
 
     Vistas.MenuLateral = Marionette.ItemView.extend({
         template: 'Profeonline.Modulos.Admin.Templates.MenuLateral',
-
-        events: {
-            "click li": function(evt){
-                window.evt = evt;
-                evt.preventDefault();
-                $(evt.target.parentElement).addClass("active");
-            }
-        }
     });
 
     Vistas.Sede = Marionette.ItemView.extend({
@@ -30,8 +22,11 @@ Profeonline.module('Modulos.Admin.Vistas', function(Vistas, Profeonline, Backbon
             "submit": "submitClick"
         },
 
-        onRender: function(){
-            this.cargarDatos();
+        limpiarCampos: function(){
+            this.$el.find("#in-nombre").val("");
+            this.$el.find("#in-ciudad").val("");
+            this.$el.find("#in-direccion").val("");
+            this.$el.find("#in-telefono").val("");
         },
 
         submitClick: function(evt){
@@ -50,18 +45,6 @@ Profeonline.module('Modulos.Admin.Vistas', function(Vistas, Profeonline, Backbon
             this.trigger("form:submit", data);
         },
 
-        cargarDatos: function(){
-            var self = this;
-            // pedir los nuevos datos al servidor
-            var sedesRequest = Profeonline.request("entidades:sedes");
-            $.when(sedesRequest).done(function( sedesCollection ){
-                self.collection.reset();
-                // actualizar los datos y renderizar nuevamente la vista
-                sedesCollection.each(function(sede){
-                    self.collection.add(sede);
-                });
-            });
-        }
     });
 
     
@@ -82,11 +65,11 @@ Profeonline.module('Modulos.Admin.Vistas', function(Vistas, Profeonline, Backbon
             "submit": "submitClick"
         },
 
-        onRender: function(){
-            // cargar Datos de la tabla
-            this.cargarDatos();
-            // pedir las sedes para agregarla al combobox del formulario
-            this.cargarSedes();
+        limpiarCampos: function(){
+            this.$el.find("#in-nombre").val("");
+            this.$el.find("#in-titulo").val("");
+            this.$el.find("#in-jornada").val("");
+            this.$el.find("#in-sede").val("");
         },
 
         submitClick: function(evt){
@@ -96,40 +79,23 @@ Profeonline.module('Modulos.Admin.Vistas', function(Vistas, Profeonline, Backbon
 
             // serializamos los datos
             var data = {
-                nombre:    this.$el.find("#in-nombre").val(),
-                titulo:    this.$el.find("#in-titulo").val(),
+                nombre: this.$el.find("#in-nombre").val(),
+                titulo: this.$el.find("#in-titulo").val(),
                 jornada: this.$el.find("#in-jornada").val(),
-                codigo_sede:  this.$el.find("#in-sede").val()
+                codigo_sede: this.$el.find("#in-sede").val()
             };
-            console.log(data);
-            // le enviamos un evento a nuestro "controlador" para que lo procese
+            // enviamos un evento a nuestro "controlador" para que lo procese
             this.trigger("form:submit", data);
         },
 
-        cargarSedes: function(){
-            var self = this;
-            var requestSedes = Profeonline.request("entidades:sedes");
-            $.when(requestSedes).done(function(datos){
-                // obtener el elemento donde guardaremos las opciones
-                var $select = self.$el.find("#in-sede").empty();
-                // recorrer los datos, y agregar cada elemento en el DOM
-                datos.each( function(sede){
-                    $select.append('<option value="'+sede.get("codigo_sede")+'">'+sede.get("nombre")+'</option>' );
-                });
+        // workaround para no tener que crear una vista de formulario, y setear un modelo
+        mostrarSedesEnFormulario: function(){            
+            // obtener el elemento donde guardaremos las opciones
+            var $select = this.$el.find("#in-sede").empty();
+            // usamos la coleccion global de la aplicacion, creamos las opciones del formulario con jquery
+            Profeonline.Entidades.Sedes.each( function(sede){
+                $select.append('<option value="'+sede.get("codigo_sede")+'">'+sede.get("nombre")+'</option>' );
             });
         },
-
-        cargarDatos: function(){
-            var self = this;
-            // pedir los nuevos datos al servidor
-            var dataRequest = Profeonline.request("entidades:carreras");
-            $.when(dataRequest).done(function( carrerasColeccion ){
-                self.collection.reset();
-                // actualizar los datos y renderizar nuevamente la vista
-                carrerasColeccion.each(function(carrera){
-                    self.collection.add(carrera);
-                });
-            });
-        }
     });
 });
