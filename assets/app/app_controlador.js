@@ -24,38 +24,31 @@ Profeonline.module('Controlador', function(Controlador, Profeonline, Backbone, M
     // API que controlara las acciones de la pagina
     var API = {
         inicio: function(){
-            // cargar menu
-            var headerView = new Profeonline.Modulos.Comunes.Vistas.cabeceraGenerica();
-            Profeonline.headerRegion.show( headerView );
-
-            // cargar la vista
+            // cargar cuerpo
             var inicioView = new Profeonline.Modulos.Comunes.Vistas.InicioTemporal();
             Profeonline.mainRegion.show( inicioView );
         },
 
         administrarSedes: function(){
-            // cargar cabecera
-            var headerView = new Profeonline.Modulos.Comunes.Vistas.cabeceraGenerica();
-            Profeonline.headerRegion.show( headerView );
-
-            // cargar cuerpo
+            // cargar el cuerpo
             Profeonline.Modulos.Admin.Controller.mostrarVistaSedes();
         },
         administrarCarreras: function(){
-            // cargar cabecera
-            var headerView = new Profeonline.Modulos.Comunes.Vistas.cabeceraGenerica();
-            Profeonline.headerRegion.show( headerView );
-
             // cargar el cuerpo
             Profeonline.Modulos.Admin.Controller.mostrarVistaCarreras();
         },
         administrarAsignaturas: function(){
-            alert("asignaturas!");
+            // cargar el cuerpo
+            Profeonline.Modulos.Admin.Controller.mostrarVistaAsignaturas();
         }
     };
 
     // al iniciar la aplicacion, instanciar el router y entregarle el controlador
     Profeonline.addInitializer(function(){
+        // cargar cabecera
+        var headerView = new Profeonline.Modulos.Comunes.Vistas.cabeceraGenerica();
+        Profeonline.headerRegion.show( headerView );
+
         new Profeonline.Router({
             controller: API
         });
