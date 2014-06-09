@@ -51,7 +51,7 @@
         public static function obtener($codigo_asignatura){
             $db = DB::connect();
             $statement = $db->prepare(
-                'SELECT codigo_asignatura, codigo_carrera, nombre, anno from asignatura WHERE codigo_asignatura=:codigo_asignatura'
+                'SELECT a.codigo_asignatura, a.codigo_carrera, c.nombre AS nombre_carrera, a.nombre, a.anno FROM asignatura a JOIN carrera c ON a.codigo_carrera=c.codigo_carrera WHERE a.codigo_asignatura=:codigo_asignatura'
             );
             $statement->bindParam('codigo_asignatura', $codigo_asignatura);
             $result = $statement->execute();

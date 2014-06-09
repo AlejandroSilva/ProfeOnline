@@ -111,4 +111,50 @@ Profeonline.module('Modulos.Admin.Templates', function(Templates, Profeonline, B
             </table> \
         </section> \
     ';
+
+    Templates.Asignatura = ' \
+        <td><%= codigo_asignatura %></td> \
+        <td><%= nombre %></td> \
+        <td><%= anno %></td> \
+        <td><%= nombre_carrera %></td> \
+    ';
+
+    Templates.Asignaturas = ' \
+        <section> \
+            <div class="encabezado"> \
+                <h1 class="titulo">Asignaturas</h1> \
+                <p>Estas son las Carreras existentes.... (continuar con la descripción)</p> \
+            </div> \
+        </section> \
+        <section> \
+            <h2>Crear nueva Asignatura</h2> \
+            <form action="post" id="form-asignatura"> \
+                <label for="in-nombre">Nombre</label> \
+                <input type="text" id="in-nombre" required maxlength="45" pattern=".{5,45}" title="Entre 5 y 45 letras"> \
+                <br> \
+                <label for="in-carrera">Carrera</label> \
+                <select name="" id="in-carrera" required></select> \
+                <br> \
+                <label for="in-anno">Año</label> \
+                <input type="text" id="in-anno" value="2014" disabled required> \
+                <br> \
+                <button type="submit" class="btn btn-primary">Crear</button> \
+            </form> \
+        </section> \
+        <section> \
+            <h2>Asignaturas Existentes</h2> \
+            <table id="tabla-asignaturas" class="table"> \
+                <thead> \
+                <tr> \
+                    <td>Codigo Asignatura</td> \
+                    <td>Nombre</td> \
+                    <td>Año</td> \
+                    <td>Carrera</td> \
+                </tr> \
+                </thead> \
+                <tbody> \
+                </tbody> \
+            </table> \
+        </section> \
+    ';
 });

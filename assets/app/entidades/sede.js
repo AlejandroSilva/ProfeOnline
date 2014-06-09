@@ -62,7 +62,7 @@ Profeonline.module('Entidades', function(Entidades, Profeonline, Backbone, Mario
 
     };
 
-    Profeonline.reqres.setHandler("sedes:actualizar", function(){
+    Profeonline.reqres.setHandler("entidades:sedes:actualizar", function(){
         return API.pedirSedes();
     });
     Profeonline.reqres.setHandler("entidades:sede:nueva", function(datos){

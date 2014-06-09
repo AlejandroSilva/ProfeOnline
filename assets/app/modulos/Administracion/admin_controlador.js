@@ -23,7 +23,7 @@ Profeonline.module('Modulos.Admin', function(Admin, Profeonline, Backbone, Mario
                 collection: Profeonline.Entidades.Sedes
             });
             // actualizar la coleccion desde el servidor
-            Profeonline.request("sedes:actualizar");
+            Profeonline.request("entidades:sedes:actualizar");
 
             // si el formulario fue enviado correctamente, volver a cargar los datos de las sedes
             vistaSedes.on("form:submit", function(datos){
@@ -51,9 +51,9 @@ Profeonline.module('Modulos.Admin', function(Admin, Profeonline, Backbone, Mario
                 collection: Profeonline.Entidades.Carreras
             });
             // actualizar la coleccion desde el servidor
-            Profeonline.request("carreras:actualizar");
+            Profeonline.request("entidades:carreras:actualizar");
             // obtener las sedes para ser mostradas en el formulario
-            var sedesRequest = Profeonline.request("sedes:actualizar");
+            var sedesRequest = Profeonline.request("entidades:sedes:actualizar");
             $.when(sedesRequest).done(function(){
                 vistaCarreras.mostrarSedesEnFormulario();
             });
@@ -73,7 +73,39 @@ Profeonline.module('Modulos.Admin', function(Admin, Profeonline, Backbone, Mario
 
             // mostrar la vista en "bodyRegion"
             Profeonline.Modulos.Admin.mainLayout.bodyRegion.show( vistaCarreras );
-        }
+        },
 
+        mostrarVistaAsignaturas: function(){
+            cargarLayout();
+            mostrarMenu();
+
+            // iniciar la vista con una coleccion global ya existente en la aplicacion
+            window.vistaAsignaturas = new Profeonline.Modulos.Admin.Vistas.Asignaturas({
+                collection: Profeonline.Entidades.Asignaturas
+            });
+            // actualizar la coleccion desde el servidor
+            Profeonline.request("entidades:asignaturas:actualizar");
+            // obtener las carreras para ser mostradas en el formulario
+            var sedesRequest = Profeonline.request("entidades:carreras:actualizar");
+            $.when(sedesRequest).done(function(){
+                vistaAsignaturas.mostrarCarrerasEnFormulario();
+            });
+
+            // si el formulario fue enviado correctamente, volver a cargar los datos de las sedes
+            vistaAsignaturas.on("form:submit", function(datos){
+                // hacer la peticion al servidor
+                var requestNueva = Profeonline.request("entidades:asignatura:nueva", datos);
+                $.when(requestNueva).done(function(){
+                    // limpiar el formulario
+                    vistaAsignaturas.limpiarCampos();
+                }).fail(function(){
+                    // no deberia llegar aca por la validacion en html5
+                    alert("problemas creando la asignatura");
+                });
+            });
+
+            // mostrar la vista en "bodyRegion"
+            Profeonline.Modulos.Admin.mainLayout.bodyRegion.show( vistaAsignaturas );
+        },
     };
 });

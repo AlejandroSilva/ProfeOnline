@@ -98,4 +98,51 @@ Profeonline.module('Modulos.Admin.Vistas', function(Vistas, Profeonline, Backbon
             });
         },
     });
+
+    
+    Vistas.Asignatura = Marionette.ItemView.extend({
+        template: "Profeonline.Modulos.Admin.Templates.Asignatura",
+        tagName: "tr"
+    });
+
+    Vistas.Asignaturas = Marionette.CompositeView.extend({
+        template: "Profeonline.Modulos.Admin.Templates.Asignaturas",
+
+        itemView: Vistas.Asignatura,
+        itemViewContainer: 'tbody',
+
+        events: {
+            "submit": "submitClick"
+        },
+
+        limpiarCampos: function(){
+            this.$el.find("#in-nombre").val("");
+            this.$el.find("#in-carrera").val("");
+        },
+
+        submitClick: function(evt){
+            // capturar el evento
+            evt.preventDefault();
+            evt.stopPropagation();
+
+            // serializamos los datos
+            var data = {
+                nombre: this.$el.find("#in-nombre").val(),
+                anno: this.$el.find("#in-anno").val(),
+                codigo_carrera: this.$el.find("#in-carrera").val()
+            };
+            // enviamos un evento a nuestro "controlador" para que lo procese
+            this.trigger("form:submit", data);
+        },
+
+        // workaround para no tener que crear una vista de formulario, y setear un modelo
+        mostrarCarrerasEnFormulario: function(){            
+            // obtener el elemento donde guardaremos las opciones
+            var $select = this.$el.find("#in-carrera").empty();
+            // usamos la coleccion global de la aplicacion, creamos las opciones del formulario con jquery
+            Profeonline.Entidades.Carreras.each( function(carrera){
+                $select.append('<option value="'+carrera.get("codigo_carrera")+'">'+carrera.get("nombre")+'</option>' );
+            });
+        },
+    });
 });

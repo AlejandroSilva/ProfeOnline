@@ -63,7 +63,7 @@ Profeonline.module('Entidades', function(Entidades, Profeonline, Backbone, Mario
 
     };
 
-    Profeonline.reqres.setHandler("carreras:actualizar", function(){
+    Profeonline.reqres.setHandler("entidades:carreras:actualizar", function(){
         return API.pedirCarreras();
     });
     Profeonline.reqres.setHandler("entidades:carrera:nueva", function(datos){
