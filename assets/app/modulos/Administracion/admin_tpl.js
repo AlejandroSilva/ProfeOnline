@@ -29,20 +29,36 @@ Profeonline.module('Modulos.Admin.Templates', function(Templates, Profeonline, B
         <section> \
             <h2>Crear nueva Sede</h2> \
             <!-- TODO: modificar el formulario utilizando Bootstrap --> \
-            <form action="post" id="form-sedes"> \
-                <label for="in-nombre">Nombre</label> \
-                <input type="text" id="in-nombre" required maxlength="40" pattern=".{5,40}" title="Entre 5 y 40 letras"> \
-                <br> \
-                <label for="in-ciudad">Ciudad</label> \
-                <input type="text" id="in-ciudad" required maxlength="20" pattern=".{5,20}" title="Entre 5 y 20 letras"> \
-                <br> \
-                <label for="in-direccion">Dirección</label> \
-                <input type="text" id="in-direccion" maxlength="45">\
-                <br> \
-                <label for="in-telefono">Telefono</lfabel> \
-                <input type="text" id="in-telefono" maxlength="15"> \
-                <br> \
-                <button type="submit" class="btn btn-primary">Crear</button> \
+            <form action="post" id="form-sedes" class="form form-horizontal"> \
+                <div class="form-group"> \
+                    <label for="in-nombre" class="col-sm-2">Nombre</label> \
+                    <div class="col-sm-10"> \
+                        <input type="text" id="in-nombre" class="form-control" required maxlength="40" pattern=".{5,40}" title="Entre 5 y 40 letras"> \
+                    </div> \
+                </div> \
+                <div class="form-group"> \
+                    <label for="in-ciudad" class="col-sm-2">Ciudad</label> \
+                    <div class="col-sm-10"> \
+                        <input type="text" id="in-ciudad" class="form-control" required maxlength="20" pattern=".{5,20}" title="Entre 5 y 20 letras"> \
+                    </div> \
+                </div> \
+                <div class="form-group"> \
+                    <label for="in-direccion" class="col-sm-2">Dirección</label> \
+                    <div class="col-sm-10"> \
+                        <input type="text" id="in-direccion" class="form-control" maxlength="45">\
+                    </div> \
+                </div> \
+                <div class="form-group"> \
+                    <label for="in-telefono" class="col-sm-2">Telefono</label> \
+                    <div class="col-sm-10"> \
+                        <input type="text" id="in-telefono" class="form-control" maxlength="15"> \
+                    </div> \
+                </div> \
+                <div class="form-group"> \
+                    <div class="col-sm-offset-2 col-sm-10"> \
+                        <button type="submit" class="btn btn-primary">Crear</button> \
+                    </div> \
+                </div> \
             </form> \
         </section> \
         <section> \
@@ -77,20 +93,36 @@ Profeonline.module('Modulos.Admin.Templates', function(Templates, Profeonline, B
         <section> \
             <h2>Crear nueva Carrera</h2> \
             <!-- TODO: modificar el formulario utilizando Bootstrap --> \
-            <form action="post" id="form-carrera"> \
-                <label for="in-nombre">Nombre</label> \
-                <input type="text" id="in-nombre" required maxlength="40" pattern=".{5,40}" title="Entre 5 y 40 letras"> \
-                <br> \
-                <label for="in-titulo">Titulo</label> \
-                <input type="text" id="in-titulo" required maxlength="45" pattern=".{5,45}" title="Entre 5 y 45 letras"> \
-                <br> \
-                <label for="in-jornada">Jornada</label> \
-                <input type="text" id="in-jornada" required maxlength="12" pattern=".{5,12}" title="Entre 5 y 12 letras"> \
-                <br> \
-                <label for="in-sede">Sede</lfabel> \
-                <select name="" id="in-sede" required></select> \
-                <br> \
-                <button type="submit" class="btn btn-primary">Crear</button> \
+            <form action="post" id="form-carrera" class="form form-horizontal"> \
+                <div class="form-group"> \
+                    <label for="in-nombre" class="col-sm-2">Nombre</label> \
+                    <div class="col-sm-10"> \
+                        <input type="text" id="in-nombre" class="form-control" required maxlength="40" pattern=".{5,40}" title="Entre 5 y 40 letras"> \
+                    </div> \
+                </div> \
+                <div class="form-group"> \
+                    <label for="in-titulo" class="col-sm-2">Titulo</label> \
+                    <div class="col-sm-10"> \
+                        <input type="text" id="in-titulo" class="form-control" required maxlength="45" pattern=".{5,45}" title="Entre 5 y 45 letras"> \
+                    </div> \
+                </div> \
+                <div class="form-group"> \
+                    <label for="in-jornada" class="col-sm-2">Jornada</label> \
+                    <div class="col-sm-10"> \
+                        <input type="text" id="in-jornada" class="form-control" required maxlength="12" pattern=".{5,12}" title="Entre 5 y 12 letras"> \
+                    </div> \
+                </div> \
+                <div class="form-group"> \
+                    <label for="in-sede" class="col-sm-2">Sede</label> \
+                    <div class="col-sm-10"> \
+                        <select name="" id="in-sede" class="form-control" required></select> \
+                    </div> \
+                </div> \
+                <div class="form-group"> \
+                    <div class="col-sm-offset-2 col-sm-10"> \
+                        <button type="submit" class="btn btn-primary">Crear</button> \
+                    </div> \
+                </div> \
             </form> \
         </section> \
         <section> \
@@ -128,17 +160,30 @@ Profeonline.module('Modulos.Admin.Templates', function(Templates, Profeonline, B
         </section> \
         <section> \
             <h2>Crear nueva Asignatura</h2> \
-            <form action="post" id="form-asignatura"> \
-                <label for="in-nombre">Nombre</label> \
-                <input type="text" id="in-nombre" required maxlength="45" pattern=".{5,45}" title="Entre 5 y 45 letras"> \
-                <br> \
-                <label for="in-carrera">Carrera</label> \
-                <select name="" id="in-carrera" required></select> \
-                <br> \
-                <label for="in-anno">Año</label> \
-                <input type="text" id="in-anno" value="2014" disabled required> \
-                <br> \
-                <button type="submit" class="btn btn-primary">Crear</button> \
+            <form action="post" id="form-asignatura" class="form form-horizontal"> \
+                <div class="form-group"> \
+                    <label for="in-nombre" class="col-sm-2">Nombre</label> \
+                    <div class="col-sm-10"> \
+                        <input type="text" id="in-nombre" class="form-control" required maxlength="45" pattern=".{5,45}" title="Entre 5 y 45 letras"> \
+                    </div>\
+                </div> \
+                <div class="form-group"> \
+                    <label for="in-carrera" class="col-sm-2">Carrera</label> \
+                    <div class="col-sm-10"> \
+                        <select name="" id="in-carrera" class="form-control" required></select> \
+                    </div>\
+                </div> \
+                <div class="form-group"> \
+                    <label for="in-anno" class="col-sm-2">Año</label> \
+                    <div class="col-sm-10"> \
+                        <input type="text" id="in-anno" class="form-control" value="2014" disabled required> \
+                    </div>\
+                </div> \
+                <div class="form-group"> \
+                    <div class="col-sm-offset-2 col-sm-10"> \
+                        <button type="submit" class="btn btn-primary">Crear</button> \
+                    </div> \
+                </div> \
             </form> \
         </section> \
         <section> \
