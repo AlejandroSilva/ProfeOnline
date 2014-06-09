@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Profe Online</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="assets/vendor/bootstrap-3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- Librerias necesarias -->
+    <script src="assets/vendor/jquery-1.11.0.min.js"></script>
+    <script src="assets/vendor/backbone.marionette/json2.js"></script>
+    <script src="assets/vendor/backbone.marionette/underscore.js"></script>
+    <script src="assets/vendor/backbone.marionette/backbone.js"></script>
+    <script src="assets/vendor/backbone.marionette/backbone.marionette.js"></script>
+    
+    <!-- Aplicaion en Marionette -->
+    <script src="assets/app/core_mods.js"></script>
+    <script src="assets/app/app.js"></script>
+    <script src="assets/app/app_controlador.js"></script>
+    <script src="assets/app/entidades/sede.js"></script>
+    <script src="assets/app/entidades/carrera.js"></script>
+
+    <!-- Modulos de la aplicacion -->
+    <script src="assets/app/modulos/comunes/comunes_tpl.js"></script>
+    <script src="assets/app/modulos/comunes/comunes_vistas.js"></script>
+
+    <script src="assets/app/modulos/administracion/admin_controlador.js"></script>
+    <script src="assets/app/modulos/administracion/admin_vistas.js"></script>
+    <script src="assets/app/modulos/administracion/admin_tpl.js"></script>
+</head>
+<body>
+    <!-- Cabecera -->
+    <div id="header-region"></div>
+
+    <!-- Contenido -->
+    <div class="container bg-blanco">
+        <div id="main-region"></div>
+    </div>
+
+    <script>
+        // iniciar la aplicacion al cargar el DOM
+        Profeonline.start();
+    </script>
+</body>
+</html>
